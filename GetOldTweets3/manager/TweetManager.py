@@ -2,6 +2,7 @@
 
 import json, re, datetime, sys, random, http.cookiejar
 import urllib.request, urllib.parse, urllib.error
+from time import sleep
 from pyquery import PyQuery
 from .. import models
 
@@ -339,13 +340,21 @@ class TweetManager:
             print(url)
             print('\n'.join(h[0]+': '+h[1] for h in headers))
 
-        try:
-            response = opener.open(url)
-            jsonResponse = response.read()
-        except Exception as e:
-            print("An error occured during an HTTP request:", str(e))
-            print("Try to open in browser: https://twitter.com/search?q=%s&src=typd" % urllib.parse.quote(urlGetData))
-            sys.exit()
+        retry = 0
+        while True:
+            try:
+                response = opener.open(url)
+                jsonResponse = response.read()
+                break
+            except Exception as e:
+                retry += 1
+                print(f'Retry:{str(retry)}, {e}')
+                if retry >= 10:
+                    print("An error occured during an HTTP request:", str(e))
+                    print("Try to open in browser: https://twitter.com/search?q=%s&src=typd" % urllib.parse.quote(urlGetData))
+                    sys.exit()
+                else:
+                    sleep(2 ** retry)
 
         try:
             s_json = jsonResponse.decode()
