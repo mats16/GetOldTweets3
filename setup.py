@@ -8,14 +8,14 @@ with open("requirements.txt", "r") as fh:
 
 setuptools.setup(
     name="GetOldTweets3",
-    version="0.0.11",
-    author="Dmitry Mottl",
-    author_email="dmitry.mottl@gmail.com",
+    version="0.0.12",
+    author="Kazuki Matsuda",
+    author_email="mats.kazuki@gmail.com",
     license='MIT',
     description="Get old tweets from Twitter",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/Mottl/GetOldTweets3",
+    url="https://github.com/mats16/GetOldTweets3",
     keywords="twitter tweets",
     packages=setuptools.find_packages(),
     scripts=['bin/GetOldTweets3'],
